@@ -914,8 +914,11 @@ inline int GetTimeStep(int max_divs, ImPlotTimeUnit unit) {
 
 ImPlotTime MkGmtTime(struct tm *ptm) {
     ImPlotTime t;
-#ifdef _WIN32
+// ARKREP MODIFIED CODE (for ps5 compilation)
+#if defined(_WIN32)
     t.S = _mkgmtime(ptm);
+#elif defined(__PROSPERO__)
+	t.S = mktime(ptm);
 #else
     t.S = timegm(ptm);
 #endif
@@ -926,11 +929,18 @@ ImPlotTime MkGmtTime(struct tm *ptm) {
 
 tm* GetGmtTime(const ImPlotTime& t, tm* ptm)
 {
-#ifdef _WIN32
+// ARKREP MODIFIED CODE (for ps5 compilation)
+#if defined(_WIN32)
   if (gmtime_s(ptm, &t.S) == 0)
     return ptm;
   else
     return nullptr;
+// ARKREP MODIFIED CODE (for ps5 compilation)
+#elif defined(__PROSPERO__)
+	if (gmtime_s(&t.S, ptm) == 0)
+		return ptm;
+	else
+		return nullptr;
 #else
   return gmtime_r(&t.S, ptm);
 #endif
@@ -945,11 +955,16 @@ ImPlotTime MkLocTime(struct tm *ptm) {
 }
 
 tm* GetLocTime(const ImPlotTime& t, tm* ptm) {
-#ifdef _WIN32
+#if defined(_WIN32)
   if (localtime_s(ptm, &t.S) == 0)
     return ptm;
   else
     return nullptr;
+#elif defined(__PROSPERO__)
+	if (localtime_s(&t.S, ptm) == 0)
+		return ptm;
+	else
+		return nullptr;
 #else
     return localtime_r(&t.S, ptm);
 #endif
