@@ -914,7 +914,6 @@ inline int GetTimeStep(int max_divs, ImPlotTimeUnit unit) {
 
 ImPlotTime MkGmtTime(struct tm *ptm) {
     ImPlotTime t;
-// ARKREP MODIFIED CODE (for ps5 compilation)
 #if defined(_WIN32)
     t.S = _mkgmtime(ptm);
 #elif defined(__PROSPERO__)
@@ -929,13 +928,11 @@ ImPlotTime MkGmtTime(struct tm *ptm) {
 
 tm* GetGmtTime(const ImPlotTime& t, tm* ptm)
 {
-// ARKREP MODIFIED CODE (for ps5 compilation)
 #if defined(_WIN32)
   if (gmtime_s(ptm, &t.S) == 0)
     return ptm;
   else
     return nullptr;
-// ARKREP MODIFIED CODE (for ps5 compilation)
 #elif defined(__PROSPERO__)
 	if (gmtime_s(&t.S, ptm) == 0)
 		return ptm;

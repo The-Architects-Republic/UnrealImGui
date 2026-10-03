@@ -15177,7 +15177,6 @@ static bool Platform_OpenInShellFn_DefaultImpl(ImGuiContext*, const char* path)
     ::MultiByteToWideChar(CP_UTF8, 0, path, -1, path_wbuf.Data, path_wsize);
     return (INT_PTR)::ShellExecuteW(NULL, L"open", path_wbuf.Data, NULL, NULL, SW_SHOWDEFAULT) > 32;
 }
-// ARKREP MODIFIED CODE (for ps5 compilation)
 #elif PLATFORM_APPLE || PLATFORM_LINUX
 #include <sys/wait.h>
 #include <unistd.h>

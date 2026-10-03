@@ -3679,7 +3679,6 @@ bool ImGui::TempInputScalar(const ImRect& bb, ImGuiID id, const char* label, ImG
     return value_changed;
 }
 
-// ARKREP MODIFIED CODE
 ImGuiInputTextState* ImGui::GetInputTextState(ImGuiID id)
 {
 	ImGuiContext& g = *GImGui;
